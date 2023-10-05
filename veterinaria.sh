@@ -1,56 +1,51 @@
 #!/bin/bash
 
-# Función para verificar si la cédula del socio ya existe en el archivo socios.txt
-function verificar_cedula_existente() {
-  local cedula="$1"
-  if grep -q "^$cedula," socios.txt; then
-    return 0 # La cédula ya existe
+function validar_cedula(){
+  if [ -z $(cat socios.txt | grep $1) ] ; then
+    return 0
   else
-    return 1 # La cédula no existe
+    return 1
   fi
 }
 
-# Función para registrar un nuevo socio en socios.txt
-function registrar_socio() {
-  local nombre_dueno="$1"
-  local cedula="$2"
-  local nombre_mascota="$3"
-  local edad_mascota="$4"
-  local contacto="$5"
+function registrar_socio(){
+  if ! [ -e "socios.txt" ]; then
+     touch socios.txt
+  fi
+  read -p "Ingrese nombre del dueño: " nombre_duenio
+  read -p "Ingrese cédula del dueño: " cedula_a_validar
+  read -p "¿Cuántas mascotas va a registrar? " nro_mascotas
+  while [ "$nro_mascotas" -gt 4 ] || [ "$nro_mascotas" -lt 1 ]; do
+  read -p "Se debe registrar al menos una mascota y un máximo de cuatro mascotas: "
+  done
+  datos="$nombre_duenio,$cedula_a_validar"
+  for ((i = 1; i < $nro_mascotas; i++)); do
+      read -p "Ingrese nombre de la mascota: " nombre_mascota
+      read -p "Ingrese edad de la mascota: " edad_mascota
+      datos="$datos,$nombre_mascota,$edad_mascota"
+  done
+  read -p "Ingrese nombre de la mascota: " nombre_mascota
+  read -p "Ingrese edad de la mascota: " edad_mascota
+  read -p "Ingrese opción de contacto (email o teléfono): " contacto
 
-  if verificar_cedula_existente "$cedula"; then
-    echo "La cédula ya existe en el sistema."
-  else
-    # Obtener el siguiente número disponible para el socio
-    local numero_socio=$(( $(cut -d ',' -f 1 socios.txt | sort -n | tail -n 1) + 1 ))
-    echo "$numero_socio,$nombre_dueno,$cedula,$nombre_mascota,$edad_mascota,$contacto" >> socios.txt
-    echo "Socio registrado con éxito."
+  
+
+  if validar_cedula "$cedula_a_validar" -eq 1; then
+    datos="$datos,$contacto"
+    echo "$datos" >> socios.txt
+    echo "Se registro el socio"
+    sleep 2
+    return 0
+  else 
+    echo "El socio con la cédula $cedula_a_validar ya esta registrado"
+    sleep 2
+    return 1
   fi
 }
 
-# Función para agendar una nueva cita en citas.txt
-function agendar_cita() {
-  # Implementar esta función
-}
-
-# Función para actualizar el stock de artículos en articulos.txt
-function actualizar_stock() {
-  # Implementar esta función
-}
-
-# Función para realizar la venta de productos
-function realizar_venta() {
-  # Implementar esta función
-}
-
-# Función para generar un informe mensual
-function generar_informe_mensual() {
-  # Implementar esta función
-}
-
-# Función principal del programa
 function main() {
   while true; do
+    # clear
     echo "Menú:"
     echo "1. Registrar socio"
     echo "2. Agendar cita"
@@ -59,22 +54,28 @@ function main() {
     echo "5. Informe mensual"
     echo "6. Salir"
     read -p "Seleccione una opción: " opcion
+   
 
     case $opcion in
       1)
-        # Llamar a la función registrar_socio
+        registrar_socio
+        
         ;;
       2)
         # Llamar a la función agendar_cita
+        echo "1"
         ;;
       3)
         # Llamar a la función actualizar_stock
+        echo "1"
         ;;
       4)
         # Llamar a la función realizar_venta
+        echo "1"
         ;;
       5)
         # Llamar a la función generar_informe_mensual
+        echo "1"
         ;;
       6)
         echo "Saliendo del programa."
@@ -87,6 +88,6 @@ function main() {
   done
 }
 
-# Llamar a la función principal
+clear
 main
 

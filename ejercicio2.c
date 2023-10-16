@@ -18,7 +18,7 @@ void random_wait(){
 
 //Función para simular la ejecución de procesos y imprimirlos en salida standar
 void execute_process(char name){
-  //random_wait();
+  random_wait();
   printf("%c \n", name);
 }
 
@@ -46,7 +46,7 @@ void* lC (void * x){
   execute_process('C');
   execute_process('E');
   sem_post(&sE);
-  pthread_exit(NULL);
+  sem_post(&sE);
   return 0;
 }
 
@@ -55,7 +55,6 @@ void* lH (void * x){
   sem_wait(&sE);
   execute_process('G');
   sem_post(&sG);
-  pthread_exit(NULL);
   return 0;
 }
 
@@ -75,6 +74,9 @@ int main(){
   pthread_join(t2, NULL);
   pthread_join(t3, NULL);
   pthread_join(t4, NULL);
+
+  sem_destroy(&sE);
+  sem_destroy(&sG);
 
   return 0;
 }

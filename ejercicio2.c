@@ -10,7 +10,7 @@ sem_t sE,sG, sP, sI;
 // Función que genera una espera aleatoria
 void random_wait(){
   int min_wait=0;
-  int max_wait=500000;
+  int max_wait=10000;
   srand(time(NULL)); // Randomiza
   int sleep_time = (rand() % (max_wait - min_wait + 1)) + min_wait; //Obtiene un numero al azar entre minimo y maximo
   usleep(sleep_time); //Hace esperar al hilo
@@ -32,7 +32,7 @@ void* lA (void * x){
 void* lJ (void * x) {
   // Implementa las operaciones necesarias para 'J'
   execute_process('J');
-  //sem_wait(&sI);
+  sem_wait(&sI);
   execute_process('M');
   execute_process('P');
   sem_post(&sP);
@@ -50,9 +50,9 @@ void* lk (void * x) {
 void* lB (void * x){
   execute_process('B');
   execute_process('D');
-  //sem_wait(&sE);
+  sem_wait(&sE);
   execute_process('F');
-  //sem_wait(&sG);
+  sem_wait(&sG);
   execute_process('Q');
   pthread_t t5, t6;
   pthread_create(&t5, NULL, lJ, NULL);
@@ -61,6 +61,7 @@ void* lB (void * x){
   sem_post(&sI);
   execute_process('L');
   execute_process('N');
+  sem_wait(&sP);
   execute_process('O');
   return 0;
 }
@@ -74,7 +75,7 @@ void* lC (void * x){
 
 void* lH (void * x){
   execute_process('H');
-  //sem_wait(&sE);
+  sem_wait(&sE);
   execute_process('G');
   sem_post(&sG);
   return 0;

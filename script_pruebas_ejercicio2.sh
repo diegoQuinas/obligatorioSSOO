@@ -29,8 +29,8 @@ check_output(){
   if [ -s "$temp_output" ]; then
     ((failed_cases++))
     echo "===========================" >> "$bad_results_file"
-    echo -e "RESULTADO \e[31mFALLIDO\e[0m" | tee -a "$bad_results_file"
     cat "$temp_output" >> "$bad_results_file"
+    echo -e "RESULTADO \e[31mFALLIDO\e[0m" | tee -a "$bad_results_file"
     echo "===========================" >> "$bad_results_file"
     rm "$temp_output"
     return 1

@@ -31,7 +31,11 @@ mensaje_salida() {
 sigint_handler() {
   echo ""
   echo "Proceso interrumpido con Ctrl+C."
-  mensaje_errores
+  if [ $failed_cases -eq 0 ]; then
+    echo "Hasta ahora ninguna ejecución falló"
+  else
+    mensaje_errores
+  fi
   exit 0
 }
 

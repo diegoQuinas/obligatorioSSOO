@@ -2,8 +2,9 @@
 
 # Nombre del archivo de salida
 output="salida.txt"
-bad_output_file="salidas_incorrectas.txt"
-# Número de veces que se ejecutará el programa
+bad_results_file="casos_fallidos.txt"
+echo "Batería de pruebas corrida el $(date)" > "$bad_results_file"
+# Número d veces que se ejecutará el programa
 if [ $# -eq 0 ]; then
   num_executions=50
 else
@@ -13,7 +14,7 @@ fi
 
 check_output(){
   
-  temp_output="$(mktemp)"
+  temp_output="temp.txt"
 
   cat "$output" | grep --color=always 'D.*B\|E.*C\|G.*H' | tee -a "$temp_output"
   cat "$output" | grep --color=always 'F.*D\|F.*E\|G.*E\|G.*H' | tee -a "$temp_output"
@@ -24,15 +25,22 @@ check_output(){
   cat "$output" | grep --color=always 'N.*L' | tee -a "$temp_output"
   cat "$output" | grep --color=always 'O.*P' | tee -a "$temp_output"
   cat "$output" | grep --color=always 'P.*M' | tee -a "$temp_output"
+  
   if [ -s "$temp_output" ]; then
-    echo -e "RESULTADO \e[31mFALLIDO\e[0m"
-    return 1
+    ((failed_cases++))
+    echo "===========================" >> "$bad_results_file"
+    echo -e "RESULTADO \e[31mFALLIDO\e[0m" | tee -a "$bad_results_file"
+    cat "$temp_output" >> "$bad_results_file"
+    echo "===========================" >> "$bad_results_file"
     rm "$temp_output"
+    return 1
   else
+    echo -e "\e[34m$(cat $output)\e[0m"
     echo -e "RESULTADO \e[32mOK\e[0m"
+    rm "$temp_output"
+    return 0
   fi
 
-  rm "$temp_output"
 }
 
 # Compila el programa
@@ -41,8 +49,7 @@ gcc -pthread -o ejercicio2 ejercicio2.c
 # Verifica si la compilación tuvo éxito
 if [ $? -eq 0 ]; then
   echo "Compilación exitosa."
-  temp_failed_cases="$(mktemp)"
-
+  failed_cases=0
   # Bucle para ejecutar el programa 200 veces
   for ((i = 1; i <= $num_executions; i++)); do
     # Ejecuta el programa y guarda la salida estándar en el archivo
@@ -51,22 +58,19 @@ if [ $? -eq 0 ]; then
     # Verifica si la ejecución tuvo éxito
     if [ $? -eq 0 ]; then
       echo "Ejecución $i"
-      echo -e "\e[34m$(cat $output)\e[0m"
       check_output 
-      if [ $? -eq 1 ]; then
-        echo "$i" >> temp_failed_cases
-      fi
     else
       echo "Error en la ejecución $i."
     fi
     echo "============================="
   done
-  
-  if [ -s "$temp_failed_cases" ]; then
-    echo "Fallaron los casos $temp_failed_cases"
-  else
+   
+  if [ "$failed_cases" -eq 0 ]; then
     echo "Todas las $num_executions ejecuciones salieron en el órden correcto"
+  else
+    echo "Fallaron $failed_cases casos. Estan en el archivo $bad_results_file"
   fi
+  rm "$output" 
  
 else
   echo "Error de compilación."

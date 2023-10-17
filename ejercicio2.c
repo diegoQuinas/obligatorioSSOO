@@ -19,7 +19,7 @@ void random_wait(){
 //Función para simular la ejecución de procesos y imprimirlos en salida standar
 void execute_process(char name){
   random_wait();
-  printf("%c \n", name);
+  printf("%c", name);
 }
 
 void* lA (void * x){

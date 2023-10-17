@@ -1,4 +1,4 @@
-#!/bin/bash
+ #!/bin/bash
 
 # Nombre del archivo de salida
 output="salida.txt"
@@ -15,15 +15,15 @@ check_output(){
   
   temp_output="$(mktemp)"
 
-  cat "$output" | grep --color=always 'D.*B\|E.*C\|G.*H' > "$temp_output"
-  cat "$output" | grep --color=always 'F.*D\|F.*E\|G.*E\|G.*H' >> "$temp_output"
-  cat "$output" | grep --color=always 'Q.*F\|Q.*G' >> "$temp_output"
-  cat "$output" | grep --color=always 'I.*Q\|J.*Q\|K.*Q' >> "$temp_output"
-  cat "$output" | grep --color=always 'L.*I' >> "$temp_output"
-  cat "$output" | grep --color=always 'M.*I\|M.*J' >> "$temp_output"
-  cat "$output" | grep --color=always 'N.*L' >> "$temp_output"
-  cat "$output" | grep --color=always 'O.*P' >> "$temp_output"
-  cat "$output" | grep --color=always 'P.*M' >> "$temp_output"
+  cat "$output" | grep --color=always 'D.*B\|E.*C\|G.*H' | tee -a "$temp_output"
+  cat "$output" | grep --color=always 'F.*D\|F.*E\|G.*E\|G.*H' | tee -a "$temp_output"
+  cat "$output" | grep --color=always 'Q.*F\|Q.*G' | tee -a "$temp_output"
+  cat "$output" | grep --color=always 'I.*Q\|J.*Q\|K.*Q' | tee -a "$temp_output"
+  cat "$output" | grep --color=always 'L.*I' | tee -a "$temp_output"
+  cat "$output" | grep --color=always 'M.*I\|M.*J' | tee -a "$temp_output"
+  cat "$output" | grep --color=always 'N.*L' | tee -a "$temp_output"
+  cat "$output" | grep --color=always 'O.*P' | tee -a "$temp_output"
+  cat "$output" | grep --color=always 'P.*M' | tee -a "$temp_output"
   if [ -s "$temp_output" ]; then
     echo -e "RESULTADO \e[31mFALLIDO\e[0m"
     return 1

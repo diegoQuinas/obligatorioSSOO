@@ -1,3 +1,0 @@
-echo "..."
-DATO = read -p "inserte 1 dato"
-echo $DATO

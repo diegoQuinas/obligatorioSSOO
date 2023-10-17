@@ -1,15 +1,42 @@
  #!/bin/bash
-
-# Nombre del archivo de salida
-output="salida.txt"
-bad_results_file="casos_fallidos.txt"
-echo "Batería de pruebas corrida el $(date)" > "$bad_results_file"
+ 
+ 
 # Número d veces que se ejecutará el programa
 if [ $# -eq 0 ]; then
   num_executions=50
 else
   num_executions="$1"
 fi
+output="salida.txt"
+bad_results_file="casos_fallidos.txt"
+echo "Batería de pruebas corrida el $(date)" > "$bad_results_file"
+failed_cases=0
+
+mensaje_errores() {
+ if [ "$failed_cases" -gt 0 ]; then
+  echo "Fallaron $failed_cases casos. Estan en el archivo $bad_results_file"
+ fi
+
+}
+
+mensaje_salida() {
+ if [ "$failed_cases" -eq 0 ]; then
+   echo "Todas las $num_executions ejecuciones salieron en el órden correcto"
+ else
+  mensaje_errores
+ fi
+ rm "$output" 
+}
+
+sigint_handler() {
+  echo ""
+  echo "Proceso interrumpido con Ctrl+C."
+  mensaje_errores
+  exit 0
+}
+
+# Registra el manejador de señales para SIGINT
+trap 'sigint_handler' SIGINT
 
 
 check_output(){
@@ -49,7 +76,6 @@ gcc -pthread -o ejercicio2 ejercicio2.c
 # Verifica si la compilación tuvo éxito
 if [ $? -eq 0 ]; then
   echo "Compilación exitosa."
-  failed_cases=0
   # Bucle para ejecutar el programa 200 veces
   for ((i = 1; i <= $num_executions; i++)); do
     # Ejecuta el programa y guarda la salida estándar en el archivo
@@ -64,14 +90,7 @@ if [ $? -eq 0 ]; then
     fi
     echo "============================="
   done
-   
-  if [ "$failed_cases" -eq 0 ]; then
-    echo "Todas las $num_executions ejecuciones salieron en el órden correcto"
-  else
-    echo "Fallaron $failed_cases casos. Estan en el archivo $bad_results_file"
-  fi
-  rm "$output" 
- 
+  mensaje_salida  
 else
   echo "Error de compilación."
 fi

@@ -40,7 +40,7 @@ void* lJ (void * x) {
 }
 
 void* lk (void * x) {
-  execute_process('k');
+  execute_process('K');
   pthread_exit(NULL);
   return 0;
 }
@@ -58,6 +58,7 @@ void* lB (void * x){
   pthread_create(&t5, NULL, lJ, NULL);
   pthread_create(&t6, NULL, lk, NULL);
   execute_process('I');
+  sem_post(&sI);
   execute_process('L');
   execute_process('N');
   execute_process('O');
@@ -83,6 +84,8 @@ void* lH (void * x){
 int main(){
   sem_init(&sE, 0, 0);
   sem_init(&sG, 0, 0);
+  sem_init(&sP, 0, 0);
+  sem_init(&sI, 0, 0);
   pthread_t t1,t2,t3,t4;
   pthread_attr_t attr;
   pthread_attr_init(&attr);

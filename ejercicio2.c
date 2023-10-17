@@ -4,7 +4,7 @@
 #include <semaphore.h>
 #include <unistd.h>
 
-sem_t sE,sG;
+sem_t sE,sG, sP, sI;
 
 
 // Función que genera una espera aleatoria
@@ -28,6 +28,25 @@ void* lA (void * x){
   return 0;
 }
 
+
+void* lJ (void * x) {
+  // Implementa las operaciones necesarias para 'J'
+  execute_process('J');
+  sem_wait(&sI);
+  execute_process('M');
+  execute_process('P');
+  sem_post(&sP);
+  return 0;
+}
+
+void* lk (void * x) {
+  execute_process('k');
+  pthread_exit(NULL);
+  return 0;
+}
+
+
+
 void* lB (void * x){
   execute_process('B');
   execute_process('D');
@@ -35,13 +54,15 @@ void* lB (void * x){
   execute_process('F');
   sem_wait(&sG);
   execute_process('Q');
+  pthread_t t5, t6;
+  pthread_create(&t5, NULL, lJ, NULL);
+  pthread_create(&t6, NULL, lk, NULL);
   execute_process('I');
   execute_process('L');
   execute_process('N');
   execute_process('O');
   return 0;
 }
-
 void* lC (void * x){
   execute_process('C');
   execute_process('E');
@@ -77,6 +98,8 @@ int main(){
 
   sem_destroy(&sE);
   sem_destroy(&sG);
+  sem_destroy(&sP);
+  sem_destroy(&sI);
 
   return 0;
 }

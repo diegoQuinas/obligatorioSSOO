@@ -2,24 +2,34 @@
 
 function volver_al_menu(){
   read -p "Presione cualquier tecla para volver al menú "
+  menu
 } 
 
 function validar_cedula(){
- if $(cat socios.txt | grep -q $cedula); then
-    echo "La cédula $cedula ya está registrada"
-    volver_al_menu
-    return
+
+while IFS=, read -r cedula nombre resto; do
+  if [[ " $cedula_registrada " =~ " $1 " ]]; then
+    echo "El cliente $nombre con la cédula $cedula_registrada ya está registrado"
+    return 1 
   fi
+done < "socios.txt"
+
 }  
 
 function registrar_socio(){
-
+  
+  touch socios.txt
   echo "==================================" 
   
   
   read -p "Ingrese cédula del dueño: " cedula
-  validar_cedula "$cedula"
+  cedula_a_validar="$cedula"
   temp_socio="$cedula," 
+  validar_cedula "$cedula_a_validar"
+  valido=$?
+  if [ "$valido" -eq 1 ]; then # Si retorna 1 entonces hay una cédula duplicada
+    volver_al_menu
+  fi
   
   read -p "Ingrese nombre del dueño: " nombre_d
   temp_socio="$temp_socio$nombre_d," 
@@ -62,7 +72,7 @@ function salir() {
  exit 0
 }        
 
-function main() {
+function menu() {
   while true; do
     clear
     echo "Menú:"
@@ -107,6 +117,10 @@ function main() {
         ;;
     esac
   done
+}
+
+function main(){
+menu
 }
 
 clear

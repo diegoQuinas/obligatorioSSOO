@@ -7,7 +7,7 @@ function volver_al_menu(){
 
 function validar_cedula(){
 
-while IFS=, read -r cedula nombre resto; do
+while IFS=, read -r cedula_registrada nombre resto; do
   if [[ " $cedula_registrada " =~ " $1 " ]]; then
     echo "El cliente $nombre con la cédula $cedula_registrada ya está registrado"
     return 1 

@@ -1,0 +1,5 @@
+2023-05-01,001,Ibuprofeno para perros,2,$30.00
+2023-05-02,002,Collar antipulgas,1,$10.00
+2023-05-03,003,Alimento Seco para Gatos,3,$60.00
+2023-05-04,004,Shampoo para Perros,2,$24.00
+

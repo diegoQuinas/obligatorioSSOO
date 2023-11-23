@@ -1,0 +1,5 @@
+12345678,Firulais,Vacunación,30.00,2023-05-21,10:00
+87654321,Manchas,Revisión,45.00,2023-05-22,11:30
+23456789,Bigotes,Esterilización,60.00,2023-06-15,09:00
+98765432,Rex,Limpieza Dental,80.00,2023-06-20,14:00
+

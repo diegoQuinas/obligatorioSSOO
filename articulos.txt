@@ -1,0 +1,4 @@
+Medicamento,001,Ibuprofeno para perros,15.00,20
+Accesorio,002,Collar antipulgas,10.00,35
+Alimento,003,Alimento Seco para Gatos,20.00,50
+Higiene,004,Shampoo para Perros,12.00,25

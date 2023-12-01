@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<Locations >
+  <Project>
+    <vfs_file>C:\Users\angel\OneDrive\Escritorio\entrega\obligatorioSSOO\ejercicio3\ejercicio3.gpr</vfs_file>
+    <file_marker current="true" column=" 1" line=" 1" >
+      <vfs_project>C:\Users\angel\OneDrive\Escritorio\entrega\obligatorioSSOO\ejercicio3\ejercicio3.gpr</vfs_project>
+      <vfs_file>C:\Users\angel\OneDrive\Escritorio\entrega\obligatorioSSOO\ejercicio3\src\main.adb</vfs_file>
+    </file_marker>
+  </Project>
+  <Project >
+    <vfs_file >C:\Users\angel\OneDrive\Escritorio\ejercicio3\ejercicio3.gpr</vfs_file>
+    <file_marker current="true" column=" 1" line=" 1">
+      <vfs_project >C:\Users\angel\OneDrive\Escritorio\ejercicio3\ejercicio3.gpr</vfs_project>
+      <vfs_file >C:\Users\angel\OneDrive\Escritorio\ejercicio3\src\main.adb</vfs_file>
+    </file_marker>
+  </Project>
+</Locations>

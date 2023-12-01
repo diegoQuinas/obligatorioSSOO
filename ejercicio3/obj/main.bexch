@@ -1,0 +1,22 @@
+[GENERATED OBJECT FILE]
+b__main.o
+[PROJECT FILES]
+C:\Users\angel\OneDrive\Escritorio\entrega\obligatorioSSOO\ejercicio3\ejercicio3.gpr
+20231201202306 fc9ea7662ea8678e640e248eb4dccdc2
+[BOUND OBJECT FILES]
+C:\Users\angel\OneDrive\Escritorio\entrega\obligatorioSSOO\ejercicio3\obj\main.o
+[GENERATED SOURCE FILES]
+b__main.ads
+b__main.adb
+b__main.ali
+[RESULTING OPTIONS]
+-LC:\Users\angel\OneDrive\Escritorio\entrega\obligatorioSSOO\ejercicio3\obj\
+-LC:\Users\angel\OneDrive\Escritorio\entrega\obligatorioSSOO\ejercicio3\obj\
+-LC:/gnat/2021/lib/gcc/x86_64-w64-mingw32/10.3.1/adalib/
+-static
+-static-libgcc
+C:/gnat/2021/lib/gcc/x86_64-w64-mingw32/10.3.1/adalib/libgnarl.a
+C:/gnat/2021/lib/gcc/x86_64-w64-mingw32/10.3.1/adalib/libgnat.a
+-Xlinker
+--stack=0x200000,0x1000
+-mthreads

@@ -4,7 +4,8 @@ services:
   app:
     cap_add:
       - NET_ADMIN
- 
+    entrypoint:
+      - /app/entrypoint.sh
     build:
       context: ./app
     volumes:

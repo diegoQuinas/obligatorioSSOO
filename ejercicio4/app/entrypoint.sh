@@ -3,7 +3,7 @@
 cd /app
 
 
-if [ -d /app/instance  ]; then
+if [ -f /app/instance/*.sqlite  ]; then
   echo "La base de datos ya fue inicializada"
 else
   echo "Inicializando base de datos"
